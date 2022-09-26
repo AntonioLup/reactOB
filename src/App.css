@@ -29,7 +29,10 @@ h1{
 .App-link {
   color: #61dafb;
 }
-
+.caja{
+  width: 255px;
+  height: 255px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
