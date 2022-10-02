@@ -2,3 +2,11 @@
 .task-action{
     cursor: pointer;
 }
+.task-completed{
+  color: rgb(53, 144, 53);
+  text-decoration: line-through;
+}
+.task-pending{
+    font-weight: bold;
+    color: rgb(163, 40, 40);
+}

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { LEVELS } from "../../../models/levels.enum";
 import { Task } from "../../../models/task.class";
 
-const TaskForm = ({ add }) => {
+const TaskForm = ({ add, lenght }) => {
   const nameRef = useRef("");
   const descRef = useRef("");
   const levelRef = useRef(LEVELS.Normal);
@@ -17,6 +17,19 @@ const TaskForm = ({ add }) => {
     );
     add(newTask);
   };
+  const normalStyle = {
+    color: "blue",
+    fontWeight: "bold",
+  };
+  const urgenStyle = {
+    color: "yellow",
+    fontWeight: "bold",
+  };
+  const pendingStyle = {
+    color: "red",
+    fontWeight: "bold",
+  };
+
   return (
     <>
       <form
@@ -42,24 +55,33 @@ const TaskForm = ({ add }) => {
             autoFocus
             placeholder="Description"
           />
-          <label htmlFor="selectLevel" className="sr-only">
-            priority
-          </label>
-          <select ref={levelRef} defaultValue={LEVELS.Normal} id="selectLevel">
-            <option value={LEVELS.Normal}>Normal</option>
-            <option value={LEVELS.Urgente}>Urgente</option>
-            <option value={LEVELS.Blocking}>pendiente</option>
+          <select
+            className="form-control m-2 form-control-lg"
+            ref={levelRef}
+            defaultValue={LEVELS.Normal}
+            id="selectLevel"
+          >
+            <option style={normalStyle} value={LEVELS.Normal}>
+              Normal
+            </option>
+            <option style={urgenStyle} value={LEVELS.Urgente}>
+              Urgente
+            </option>
+            <option style={pendingStyle} value={LEVELS.Blocking}>
+              pendiente
+            </option>
           </select>
+          <button type="submit" className="btn btn-success btn-lg m-2">
+            {lenght > 0 ? "Add New Task" : "First Add"}
+          </button>
         </div>
-        <button type="submit" className="btn btn-success btn-lg m-2">
-          Submit
-        </button>
       </form>
     </>
   );
 };
 TaskForm.propTypes = {
   add: PropTypes.func.isRequired,
+  length: PropTypes.number.isRequired,
 };
 
 export default TaskForm;

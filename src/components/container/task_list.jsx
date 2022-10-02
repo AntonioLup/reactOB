@@ -24,7 +24,11 @@ const TaskList = (props) => {
 
   useEffect(() => {
     console.log("task state has been modified");
-    setLoading(false);
+    // setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
     return () => {
       console.log("tasklist componenet is going to unmount...");
     };
@@ -54,6 +58,48 @@ const TaskList = (props) => {
     tempTasks.push(task);
     setTask(tempTasks);
   }
+  const Table = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Desc</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tasks.map((task, index) => {
+            return (
+              <TaskComponent
+                key={index}
+                task={task}
+                completed={completeTask}
+                remove={deleteTask}
+              />
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  };
+  let taskTable;
+  if (tasks.length > 0) {
+    taskTable = <Table></Table>;
+  } else {
+    taskTable = (
+      <div>
+        <h3> There are no tasks to show</h3>
+        <h4>Please, create one</h4>
+      </div>
+    );
+  }
+  const loadingStyle = {
+    color: "grey",
+    fontSize: "30px",
+    fontWeight: "bold",
+  };
 
   return (
     <div className="col-12">
@@ -69,31 +115,10 @@ const TaskList = (props) => {
             height: "400px",
           }}
         >
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Desc</th>
-                <th scope="col">Priority</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tasks.map((task, index) => {
-                return (
-                  <TaskComponent
-                    key={index}
-                    task={task}
-                    completed={completeTask}
-                    remove={deleteTask}
-                  />
-                );
-              })}
-            </tbody>
-          </table>
+          {loading ? <p style={loadingStyle}>Loading...</p> : taskTable}
         </div>
       </div>
-      <TaskForm add={addTask} />
+      <TaskForm add={addTask} lenght={tasks.length} />
     </div>
   );
 };
